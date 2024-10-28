@@ -8,21 +8,21 @@ from shiny import App, ui, render
 # Load the Palmer Penguins dataset
 penguins = load_penguins()
 
-# Define the input logic (via setting up the app's UI), and
-# Store is as a UI object by assigning it to a variable
+# Create a UI object, using the page_fluid function from ui to set up the app’s UI    
 app_ui = ui.page_fluid(
-    # Add a page Title
+    # Add a level 2 page title to the app
     ui.h2("PyShiny App with Plot"),
-    # Input slider for selecting the number of bins
+    # Add an input slider for selecting the number of bins
     ui.input_slider("selected_number_of_bins", "Number of Bins", min=1, max=100, value=20),
-    # Output placeholders for plots
+    # Add output placeholders for the output elements
     ui.output_plot("histogram"),
     ui.output_plot("penguin_scatter")
 )
 
-# Define the output logic (via defining the server function)
+# Define the server function with logic that connects inputs with outputs
 def server(input, output, session):
-    @output()
+    # Add decorator functions to connect histogram() output to histogram placeholder() 
+    @output() 
     @render.plot
     def histogram():
         # Generate random data for the histogram
@@ -48,7 +48,7 @@ def server(input, output, session):
         plt.ylabel('Bill Depth (mm)')        # Y-axis label
         plt.grid(True)
 
-# Combine the UI object and server logic into an app
+# Combine UI object and server function logic into an app
 app = App(app_ui, server)
 
 # Run the app
